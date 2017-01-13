@@ -20,17 +20,23 @@ public class BankTest {
     @Test
     public void checkingAccount() {
         Bank bank = new Bank();
-        Account checkingAccount = new Account(Account.CHECKING);
-        Customer bill = new Customer("Bill").openAccount(checkingAccount);
-        Customer Rak = new Customer("Rak").openAccount(checkingAccount);
+
+        //  **Checking accounts** have a flat rate of 0.1%
+        Account billsCheckingAccount = new Account(Account.CHECKING);
+        Customer bill = new Customer("Bill").openAccount(billsCheckingAccount);
         bank.addCustomer(bill);
+        billsCheckingAccount.deposit(100.0);
+        
+        //  **Checking accounts** have a flat rate of 0.1%
+        Account raksCheckingAccount = new Account(Account.CHECKING);
+        Customer Rak = new Customer("Rak").openAccount(raksCheckingAccount);
         bank.addCustomer(Rak);
+        raksCheckingAccount.deposit(100.0);
 
-        checkingAccount.deposit(100.0);
-
+        // Calculates total interest the bank paid to all customers and their accounts
         double actualVal = bank.totalInterestPaid();
-     
-         
+        
+        // The value of 0.2 is the correct amount. 
         assertEquals(0.2,  actualVal, DOUBLE_DELTA);
     }
 
