@@ -18,26 +18,26 @@ public class BankTest {
     }
 
     @Test
-    public void checkingAccount() {
+    public void totalInterestWithMultipleCustomersPaidTest() {
+        double EXPECTED_INTEREST_PAID = 0.7;
         Bank bank = new Bank();
 
         //  **Checking accounts** have a flat rate of 0.1%
         Account billsCheckingAccount = new Account(Account.CHECKING);
         Customer bill = new Customer("Bill").openAccount(billsCheckingAccount);
         bank.addCustomer(bill);
-        billsCheckingAccount.deposit(100.0);
-        
-        //  **Checking accounts** have a flat rate of 0.1%
-        Account raksCheckingAccount = new Account(Account.CHECKING);
+        billsCheckingAccount.deposit(200.0);
+
+        Account raksCheckingAccount = new Account(Account.SAVINGS);
         Customer Rak = new Customer("Rak").openAccount(raksCheckingAccount);
         bank.addCustomer(Rak);
-        raksCheckingAccount.deposit(100.0);
+        raksCheckingAccount.deposit(500.0);
 
         // Calculates total interest the bank paid to all customers and their accounts
         double actualVal = bank.totalInterestPaid();
-        
-        // The value of 0.2 is the correct amount. 
-        assertEquals(0.2,  actualVal, DOUBLE_DELTA);
+
+        // The value of 0.2 is the correct amount.
+        assertEquals(EXPECTED_INTEREST_PAID,  actualVal, DOUBLE_DELTA);
     }
 
     @Test
