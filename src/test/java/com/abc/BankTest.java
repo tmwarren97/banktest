@@ -26,8 +26,6 @@ public class BankTest {
         double EXPECTED_INTEREST_PAID = 0.7;
         Bank bank = new Bank();
 
-        //  HINT **Checking accounts**
-        //  should have a flat interest rate of 0.1%
         Account billsAccount = new CheckingAccount();
         Customer bill = new Customer("Bill").openAccount(billsAccount);
         bank.addCustomer(bill);

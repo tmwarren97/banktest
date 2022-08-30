@@ -1,6 +1,7 @@
 package com.abc.account;
 
 import com.abc.Transaction;
+import com.abc.calculator.InterestCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +9,10 @@ import java.util.List;
 public class Account {
 
     public List<Transaction> transactions;
+    private final InterestCalculator interestCalculator;
 
-    public Account() {
+    public Account(InterestCalculator interestCalculator) {
+        this.interestCalculator = interestCalculator;
        this.transactions = new ArrayList<Transaction>();
     }
 
@@ -31,7 +34,7 @@ public class Account {
 
     public double interestEarned() {
         double amount = sumTransactions();
-        return amount * 0.002;
+        return interestCalculator.calculateInterest(amount);
     }
 
     public double sumTransactions() {
