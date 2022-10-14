@@ -26,15 +26,16 @@ public class BankTest {
         double EXPECTED_INTEREST_PAID = 2.5;
         Bank bank = new Bank();
 
+        Account raksAccount = new SavingsAccount();
+        Customer Rak = new Customer("Rak").openAccount(raksAccount);
+        bank.addCustomer(Rak);
+        raksAccount.deposit(500.0);
+
         Account billsAccount = new CheckingAccount();
         Customer bill = new Customer("Bill").openAccount(billsAccount);
         bank.addCustomer(bill);
         billsAccount.deposit(200.0);
 
-        Account raksAccount = new SavingsAccount();
-        Customer Rak = new Customer("Rak").openAccount(raksAccount);
-        bank.addCustomer(Rak);
-        raksAccount.deposit(500.0);
 
         double actualVal = bank.totalInterestPaid();
 
