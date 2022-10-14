@@ -2,8 +2,8 @@ package com.abc.calculator;
 
 public class FlatRateInterestCalculator implements InterestCalculator {
 
-    public static final double ONE_PERCENT = 0.001;
-    public static final double TWO_PERCENT = 0.002;
+    public static final double ONE_PERCENT = 0.01;
+    public static final double TWO_PERCENT = 0.02;
 
     private final double flatRate;
 
@@ -17,6 +17,7 @@ public class FlatRateInterestCalculator implements InterestCalculator {
 
     @Override
     public double calculateInterest(double amount) {
+        // TODO: implement flat rate logic - flat rate should be amount times the flatRate
         return flatRate;
     }
 }

@@ -23,7 +23,7 @@ public class BankTest {
 
     @Test
     public void totalInterestWithMultipleCustomersPaidTest() {
-        double EXPECTED_INTEREST_PAID = 0.7;
+        double EXPECTED_INTEREST_PAID = 2.5;
         Bank bank = new Bank();
 
         Account billsAccount = new CheckingAccount();
