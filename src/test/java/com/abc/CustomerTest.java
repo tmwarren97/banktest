@@ -40,7 +40,7 @@ public class CustomerTest {
     public void testOneAccount(){
         Customer oscar = new Customer("Oscar").openAccount(new SavingsAccount());
         assertEquals(1, oscar.getNumberOfAccounts());
-        assertEquals(1, oscar.getNumberOfAccounts());
+        assertEquals(1, oscar.getNumberOfAccounts());  // done
     }
 
     @Test
