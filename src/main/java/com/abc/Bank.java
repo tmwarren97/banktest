@@ -33,6 +33,7 @@ public class Bank {
     }
 
     public double totalInterestPaid() {
+        //TODO refactor with streams -- map and reduce
         double total = 0;
         
         LOG.debug("value of total local variable before enetering htloop was " + total);
@@ -47,8 +48,10 @@ public class Bank {
 
     public String getFirstCustomer() {
         try {
-            customers = null;
-            return customers.get(0).getName();
+            //TODO refactor using Optionals
+            if (null != customers)
+                return customers.get(0).getName();
+            else return null;
         } catch (Exception e){
             e.printStackTrace();
             return "Error";

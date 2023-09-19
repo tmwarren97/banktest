@@ -30,10 +30,7 @@ public class Customer {
     }
 
     public double totalInterestEarned() {
-        double total = 0;
-        for (Account a : accounts)
-            total += a.interestEarned();
-        return total;
+        return accounts.stream().map(a -> a.interestEarned()).reduce(0d, (a1, a2) -> a1 + a2);
     }
 
     public String getStatement() {
@@ -53,7 +50,7 @@ public class Customer {
 
         //Now total up all the transactions
         double total = 0.0;
-        for (Transaction t : a.transactions) {
+        for (Transaction t : a.getTransactions()) {
             s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
             total += t.amount;
         }

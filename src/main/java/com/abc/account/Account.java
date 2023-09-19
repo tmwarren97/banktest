@@ -8,7 +8,11 @@ import java.util.List;
 
 public class Account {
 
-    public List<Transaction> transactions;
+    private List<Transaction> transactions;
+
+    public List<Transaction>  getTransactions(){
+        return transactions;
+    }
     private final InterestCalculator interestCalculator;
 
     public Account(InterestCalculator interestCalculator) {
@@ -38,16 +42,14 @@ public class Account {
     }
 
     public double sumTransactions() {
-        return checkIfTransactionsExist(true);
+        return transactions.stream().map(t -> t.amount).reduce(0d,
+                (a1, a2) -> a1 + a2);
     }
 
-    private double checkIfTransactionsExist(boolean checkAll) {
-        double amount = 0.0;
-        for (Transaction t : transactions)
-            amount += t.amount;
-        return amount;
+    //TODO check if checkIfTransactionsExist is used anywhere
+    private boolean checkIfTransactionsExist(boolean checkAll) {
+        return !transactions.isEmpty();
     }
-
     public String getAccountName() {
         return "Default";
     }

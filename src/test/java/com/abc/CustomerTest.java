@@ -55,6 +55,7 @@ public class CustomerTest {
         Customer oscar = new Customer("Oscar")
                 .openAccount(new SavingsAccount());
         oscar.openAccount(new CheckingAccount());
+        oscar.openAccount(new MaxiSavingsAccount());
         assertEquals(3, oscar.getNumberOfAccounts());
     }
 }
