@@ -49,7 +49,7 @@ public class Bank {
     public String getFirstCustomer() {
         try {
             //TODO refactor using Optionals
-            if (null != customers)
+            if (null != customers && !customers.isEmpty())
                 return customers.get(0).getName();
             else return null;
         } catch (Exception e){
