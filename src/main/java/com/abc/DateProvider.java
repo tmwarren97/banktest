@@ -7,7 +7,7 @@ public class DateProvider {
     private static DateProvider instance = null;
 
     public static DateProvider getInstance() {
-        if (instance == null)
+        if (null == instance)
             instance = new DateProvider();
         return instance;
     }
