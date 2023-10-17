@@ -58,7 +58,6 @@ public class BankTest {
         Bank bank = new Bank();
         Account maxiSavingsAccount = new MaxiSavingsAccount();
         bank.addCustomer(new Customer("Bill").openAccount(maxiSavingsAccount));
-
         maxiSavingsAccount.deposit(3000.0);
 
         assertEquals(170.0, bank.totalInterestPaid(), DOUBLE_DELTA);
@@ -66,8 +65,7 @@ public class BankTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void invalid_customer() {
-        Bank bank = new Bank();
-        Customer john = new Customer("");
+        new Customer("");
     }
 
 }

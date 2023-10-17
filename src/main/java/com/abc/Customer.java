@@ -1,7 +1,6 @@
 package com.abc;
 
 import com.abc.account.Account;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,15 +43,14 @@ public class Customer {
     }
 
     public String getStatement() {
-        String statement = null;
-        statement = "Statement for " + name + "\n";
+        StringBuilder stringBuilder = new StringBuilder("Statement for " + name + "\n");
         double total = 0.0;
         for (Account account : getAccounts()) {
-            statement += "\n" + statementForAccount(account) + "\n";
+            stringBuilder.append("\n").append(statementForAccount(account)).append("\n");
             total += account.sumTransactions();
         }
-        statement += "\nTotal In All Accounts " + toDollars(total);
-        return statement;
+        stringBuilder.append("\nTotal In All Accounts ").append(toDollars(total));
+        return stringBuilder.toString();
     }
 
     public boolean transfer (String sourceAccountId, String destinationAccountId, Double amount) {
@@ -69,16 +67,17 @@ public class Customer {
         return false;
     }
     private String statementForAccount(Account account) {
-        String s = account.printAccountType();
+        StringBuilder stringBuilder = new StringBuilder(account.printAccountType());
 
         //Now total up all the transactions
         double total = 0.0;
         for (Transaction transaction : account.getTransactions()) {
-            s += "  " + (transaction.getAmount() < 0 ? "withdrawal" : "deposit") + " " + toDollars(transaction.getAmount()) + "\n";
+            stringBuilder.append("  ").append(transaction.getAmount() < 0 ? "withdrawal" : "deposit").append(" ")
+                    .append(toDollars(transaction.getAmount())).append("\n");
             total += transaction.getAmount();
         }
-        s += "Total " + toDollars(total);
-        return s;
+        stringBuilder.append("Total ").append(toDollars(total));
+        return stringBuilder.toString();
     }
 
     private String toDollars(double d){

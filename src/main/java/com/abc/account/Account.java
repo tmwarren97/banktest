@@ -6,7 +6,6 @@ import com.abc.calculator.InterestCalculator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 public class Account {
 
@@ -53,14 +52,8 @@ public class Account {
     }
 
     public double sumTransactions() {
-        return checkIfTransactionsExist(true);
-    }
-
-    private double checkIfTransactionsExist(boolean checkAll) {
         double amount = 0.0;
-        for (Transaction transaction : getTransactions()) {
-            amount += transaction.getAmount();
-        }
+        amount = getTransactions().stream().map(Transaction::getAmount).reduce(amount, Double::sum);
         return amount;
     }
 
