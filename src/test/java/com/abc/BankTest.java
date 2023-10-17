@@ -64,4 +64,10 @@ public class BankTest {
         assertEquals(170.0, bank.totalInterestPaid(), DOUBLE_DELTA);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void invalid_customer() {
+        Bank bank = new Bank();
+        Customer john = new Customer("");
+    }
+
 }

@@ -5,22 +5,37 @@ import com.abc.calculator.InterestCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class Account {
 
-    public List<Transaction> transactions;
+    private List<Transaction> transactions;
     private final InterestCalculator interestCalculator;
+
+    private final String accountId;
 
     public Account(InterestCalculator interestCalculator) {
         this.interestCalculator = interestCalculator;
-       this.transactions = new ArrayList<Transaction>();
+        this.accountId = generateRandomAccountNumber();
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public List<Transaction> getTransactions() {
+        if (transactions == null) {
+            transactions = new ArrayList<>();
+        }
+        return transactions;
     }
 
     public void deposit(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("amount must be greater than zero");
         } else {
-            transactions.add(new Transaction(amount));
+            getTransactions().add(new Transaction(amount));
         }
     }
 
@@ -28,7 +43,7 @@ public class Account {
         if (amount <= 0) {
             throw new IllegalArgumentException("amount must be greater than zero");
         } else {
-            transactions.add(new Transaction(-amount));
+            getTransactions().add(new Transaction(-amount));
         }
     }
 
@@ -43,8 +58,9 @@ public class Account {
 
     private double checkIfTransactionsExist(boolean checkAll) {
         double amount = 0.0;
-        for (Transaction t : transactions)
-            amount += t.amount;
+        for (Transaction transaction : getTransactions()) {
+            amount += transaction.getAmount();
+        }
         return amount;
     }
 
@@ -58,4 +74,11 @@ public class Account {
         return String.format(ACCOUNT_TYPE_FORMAT, getAccountName());
     }
 
+
+    private String generateRandomAccountNumber() {
+        Random random = new Random();
+        // Generate a random 10-digit number
+        return "" +  1000000000L + (long) (random.nextDouble() * 9000000000L);
+
+    }
 }

@@ -2,7 +2,7 @@ package com.abc.calculator;
 
 public class FlatRateInterestCalculator implements InterestCalculator {
 
-    public static final double ONE_PERCENT = 0.05;
+    public static final double ONE_PERCENT = 0.01;
 
     private final double flatRate;
 

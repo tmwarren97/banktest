@@ -2,6 +2,7 @@ package com.abc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,17 +13,23 @@ public class Bank {
     private List<Customer> customers;
 
     public Bank() {
-        customers = new ArrayList<Customer>();
+    }
+
+    private List<Customer> getCustomers() {
+        if (customers == null) {
+            customers = new ArrayList<>();
+        }
+        return customers;
     }
 
     public void addCustomer(Customer customer) {
-        customers.add(customer);
+        getCustomers().add(customer);
     }
 
     public String customerSummary() {
         String summary = "Customer Summary";
-        for (Customer c : customers)
-            summary += "\n - " + c.getName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
+        summary = getCustomers().stream().map(customer -> "\n - " + customer.getName() + " (" + format(customer.getNumberOfAccounts(), "account") + ")")
+                .reduce(summary, String::concat);
         return summary;
     }
 
@@ -34,24 +41,22 @@ public class Bank {
 
     public double totalInterestPaid() {
         double total = 0;
-        
         LOG.debug("value of total local variable before enetering htloop was " + total);
-        
-        for(Customer c: customers)
-            total += c.totalInterestEarned();
-        
+        total = getCustomers().stream().map(Customer::totalInterestEarned)
+                        .reduce(total, Double::sum);
         LOG.debug("value of total local variable was " + total);
         
         return total;
     }
 
-    public String getFirstCustomer() {
+    public Optional<String> getFirstCustomer() {
+        Optional<String> firstCustomerName = Optional.empty();
         try {
-            customers = null;
-            return customers.get(0).getName();
+            if (!getCustomers().isEmpty())
+                firstCustomerName = Optional.of(getCustomers().get(0).getName());
         } catch (Exception e){
-            e.printStackTrace();
-            return "Error";
+            System.out.println(e);
         }
+        return firstCustomerName;
     }
 }
