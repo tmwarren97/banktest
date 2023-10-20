@@ -9,7 +9,7 @@ import static java.lang.Math.abs;
 
 public class Customer {
     private String name;
-    private List<Account> accounts;
+    private final List<Account> accounts;
 
     public Customer(String name) {
         this.name = name;
@@ -18,6 +18,10 @@ public class Customer {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Customer openAccount(Account account) {
@@ -31,34 +35,36 @@ public class Customer {
 
     public double totalInterestEarned() {
         double total = 0;
-        for (Account a : accounts)
+        for (Account a : accounts) {
             total += a.interestEarned();
+        }
         return total;
     }
 
     public String getStatement() {
-        String statement = null;
-        statement = "Statement for " + name + "\n";
+        StringBuilder statement = null;
+        statement = new StringBuilder("Statement for " + name + "\n");
         double total = 0.0;
         for (Account a : accounts) {
-            statement += "\n" + statementForAccount(a) + "\n";
+            statement.append("\n").append(statementForAccount(a)).append("\n");
             total += a.sumTransactions();
         }
-        statement += "\nTotal In All Accounts " + toDollars(total);
-        return statement;
+        statement.append("\nTotal In All Accounts ").append(toDollars(total));
+        return statement.toString();
     }
 
     private String statementForAccount(Account a) {
-        String s = a.printAccountType();
+        StringBuilder s = new StringBuilder(a.printAccountType());
 
         //Now total up all the transactions
         double total = 0.0;
-        for (Transaction t : a.transactions) {
-            s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
-            total += t.amount;
+        for (Transaction t : a.getTransactions()) {
+            s.append("  ").append(t.getAmount() < 0 ? "withdrawal" : "deposit").append(" ")
+                    .append(toDollars(t.getAmount())).append("\n");
+            total += t.getAmount();
         }
-        s += "Total " + toDollars(total);
-        return s;
+        s.append("Total ").append(toDollars(total));
+        return s.toString();
     }
 
     private String toDollars(double d){

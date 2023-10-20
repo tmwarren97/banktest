@@ -64,4 +64,19 @@ public class BankTest {
         assertEquals(170.0, bank.totalInterestPaid(), DOUBLE_DELTA);
     }
 
+    @Test
+    public void getFirstCustomer() {
+        Bank bank = new Bank();
+        assertEquals("N/A", bank.getFirstCustomer());
+
+        Account raksAccount = new SavingsAccount();
+        Customer Rak = new Customer("Rak").openAccount(raksAccount);
+        bank.addCustomer(Rak);
+
+        Account billsAccount = new CheckingAccount();
+        Customer bill = new Customer("Bill").openAccount(billsAccount);
+        bank.addCustomer(bill);
+
+        assertEquals("Rak", bank.getFirstCustomer());
+    }
 }
