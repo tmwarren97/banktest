@@ -7,6 +7,7 @@ import com.abc.account.SavingsAccount;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class BankTest {
     private static final double DOUBLE_DELTA = 1e-15;
@@ -67,7 +68,7 @@ public class BankTest {
     @Test
     public void getFirstCustomer() {
         Bank bank = new Bank();
-        assertEquals("N/A", bank.getFirstCustomer());
+        assertThrows(NoCustomersException.class, bank::getFirstCustomer);
 
         Account raksAccount = new SavingsAccount();
         Customer Rak = new Customer("Rak").openAccount(raksAccount);

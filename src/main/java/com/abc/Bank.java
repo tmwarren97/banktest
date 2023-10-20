@@ -52,7 +52,7 @@ public class Bank {
         if (!customers.isEmpty()) {
             return customers.get(0).getName();
         } else {
-            return "N/A";
+           throw new NoCustomersException("No customers");
         }
     }
 }
