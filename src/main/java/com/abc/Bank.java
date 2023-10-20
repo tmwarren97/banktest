@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Bank {
-	private static final Logger LOG = LoggerFactory.getLogger(Bank.class) ;
-	
-    private List<Customer> customers;
+    private static final Logger LOG = LoggerFactory.getLogger(Bank.class);
+
+    private final List<Customer> customers;
 
     public Bank() {
         customers = new ArrayList<Customer>();
@@ -20,10 +20,12 @@ public class Bank {
     }
 
     public String customerSummary() {
-        String summary = "Customer Summary";
-        for (Customer c : customers)
-            summary += "\n - " + c.getName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
-        return summary;
+        StringBuilder summary = new StringBuilder("Customer Summary");
+        for (Customer c : customers) {
+            summary.append("\n - ").append(c.getName()).append(" (")
+                    .append(format(c.getNumberOfAccounts(), "account")).append(")");
+        }
+        return summary.toString();
     }
 
     //Make sure correct plural of word is created based on the number passed in:
@@ -34,24 +36,23 @@ public class Bank {
 
     public double totalInterestPaid() {
         double total = 0;
-        
-        LOG.debug("value of total local variable before enetering htloop was " + total);
-        
-        for(Customer c: customers)
+
+        LOG.debug("value of total local variable before enetering htloop was {}", total);
+
+        for (Customer c : customers) {
             total += c.totalInterestEarned();
-        
-        LOG.debug("value of total local variable was " + total);
-        
+        }
+
+        LOG.debug("value of total local variable was {}", total);
+
         return total;
     }
 
     public String getFirstCustomer() {
-        try {
-            customers = null;
+        if (!customers.isEmpty()) {
             return customers.get(0).getName();
-        } catch (Exception e){
-            e.printStackTrace();
-            return "Error";
+        } else {
+           throw new NoCustomersException("No customers");
         }
     }
 }

@@ -4,10 +4,11 @@ public class SavingsInterestCalculator implements InterestCalculator {
 
     @Override
     public double calculateInterest(double amount) {
-        if (amount <= 1000)
+        if (amount <= 1000) {
             return amount * 0.001;
-        else
+        } else {
             return 1 + (amount - 1000) * 0.002;
+        }
     }
 
 }
