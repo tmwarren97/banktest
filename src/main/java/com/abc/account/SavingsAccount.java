@@ -1,6 +1,7 @@
 package com.abc.account;
 
 import com.abc.calculator.SavingsInterestCalculator;
+import com.abc.AccountType;
 
 public class SavingsAccount extends Account {
 
@@ -10,6 +11,6 @@ public class SavingsAccount extends Account {
 
     @Override
     public String getAccountName() {
-        return "Savings";
+        return AccountType.SAVINGS.name();
     }
 }

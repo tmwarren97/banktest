@@ -1,17 +1,16 @@
 package com.abc.account;
 
 import com.abc.calculator.FlatRateInterestCalculator;
-
-import static com.abc.calculator.FlatRateInterestCalculator.ONE_PERCENT;
+import com.abc.AccountType;
 
 public class CheckingAccount extends Account {
 
     public CheckingAccount() {
-        super(new FlatRateInterestCalculator(ONE_PERCENT));
+        super(new FlatRateInterestCalculator());
     }
 
     @Override
     public String getAccountName() {
-        return "Checking";
+        return AccountType.CHECKING.name();
     }
 }
