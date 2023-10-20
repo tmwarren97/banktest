@@ -20,38 +20,39 @@ public class Bank {
     }
 
     public String customerSummary() {
-        String summary = "Customer Summary";
-        for (Customer c : customers)
-            summary += "\n - " + c.getName() + " (" + format(c.getNumberOfAccounts(), "account") + ")";
-        return summary;
-    }
-
-    //Make sure correct plural of word is created based on the number passed in:
-    //If number passed in is 1 just return the word otherwise add an 's' at the end
-    private String format(int number, String word) {
-        return number + " " + (number == 1 ? word : word + "s");
+        StringBuilder summary = new StringBuilder("Customer Summary");
+        for (Customer customer : customers) {
+            summary.append("\n - ");
+            summary.append(customer.getName());
+            summary.append(" (");
+            summary.append(format(customer.getNumberOfAccounts(), "account"));
+            summary.append(")");
+        }
+        return summary.toString();
     }
 
     public double totalInterestPaid() {
-        double total = 0;
+        double total = 0.00;
         
         LOG.debug("value of total local variable before enetering htloop was " + total);
         
-        for(Customer c: customers)
-            total += c.totalInterestEarned();
+        for(Customer customer: customers)
+            total += customer.totalInterestEarned();
         
         LOG.debug("value of total local variable was " + total);
         
         return total;
     }
 
-    public String getFirstCustomer() {
-        try {
-            customers = null;
-            return customers.get(0).getName();
-        } catch (Exception e){
-            e.printStackTrace();
-            return "Error";
-        }
+    public Optional<String> getFirstCustomer() {
+        if (customers.isEmpty())
+		return Optional.empty();
+        return Optional.of(customers.get(0).getName());
     }
+
+//Make sure correct plural of word is created based on the number passed in:
+    //If number passed in is 1 just return the word otherwise add an 's' at the end
+    private String format(int number, String word) {
+        return number + " " + (number == 1 ? word : word + "s");
+    }	
 }
