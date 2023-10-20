@@ -9,11 +9,10 @@ import static java.lang.Math.abs;
 
 public class Customer {
     private String name;
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
 
     public Customer(String name) {
         this.name = name;
-        this.accounts = new ArrayList<Account>();
     }
 
     public String getName() {
@@ -29,36 +28,72 @@ public class Customer {
         return accounts.size();
     }
 
+    public Customer transferAccounts(Account fromAccount, Account toAccount, double amount)
+            throws IllegalArgumentException
+    {
+        if (fromAccount == null)
+        {
+            throw new IllegalArgumentException("source account cannot be null");
+        }
+
+        if (toAccount == null)
+        {
+            throw new IllegalArgumentException("target account cannot be null");
+        }
+
+        if (fromAccount == toAccount)
+        {
+            throw new IllegalArgumentException("cannot transfer fund between same account");
+        }
+        fromAccount.withdraw(amount);
+        toAccount.deposit(amount);
+        return this;
+    }
+    
     public double totalInterestEarned() {
         double total = 0;
-        for (Account a : accounts)
-            total += a.interestEarned();
+        for (Account account : accounts)
+            total += account.interestEarned();
         return total;
     }
 
+    public List<Account> getAccounts()
+    {
+        return accounts;
+    }
+
+
     public String getStatement() {
-        String statement = null;
-        statement = "Statement for " + name + "\n";
-        double total = 0.0;
-        for (Account a : accounts) {
-            statement += "\n" + statementForAccount(a) + "\n";
-            total += a.sumTransactions();
+        StringBuilder statement = new StringBuilder("Statement for ");
+        statement.append(name);
+        statement.append("\n");
+        double total = 0.00;
+        for (Account account : accounts) {
+            statement.append("\n");
+            statement.append(statementForAccount(account));
+            statement.append("\n");
+            total += account.sumTransactions();
         }
-        statement += "\nTotal In All Accounts " + toDollars(total);
-        return statement;
+        statement.append("\nTotal In All Accounts ");
+        statement.append(toDollars(total));
+        return statement.toString();
     }
 
     private String statementForAccount(Account a) {
-        String s = a.printAccountType();
-
+        StringBuilder statement = new StringBuilder(account.printAccountType());
         //Now total up all the transactions
-        double total = 0.0;
-        for (Transaction t : a.transactions) {
-            s += "  " + (t.amount < 0 ? "withdrawal" : "deposit") + " " + toDollars(t.amount) + "\n";
-            total += t.amount;
+        double total = 0.00;
+        for (Transaction transaction : account.getTransactions()) {
+            statement.append("  ");
+            statement.append(transaction.getAmount() < 0 ? TransactionType.WITHDRAWAL.name() : TransactionType.DEPOSIT.name());
+            statement.append(" ");
+            statement.append(toDollars(transaction.getAmount()));
+            statement.append("\n");
+            total += transaction.getAmount();
         }
-        s += "Total " + toDollars(total);
-        return s;
+        statement.append("Total ");
+        statement.append(toDollars(total));
+        return statement.toString();
     }
 
     private String toDollars(double d){
