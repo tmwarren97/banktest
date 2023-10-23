@@ -4,6 +4,7 @@ import com.abc.Transaction;
 import com.abc.calculator.InterestCalculator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Account {
@@ -32,16 +33,14 @@ public class Account {
         }
     }
 
-    public double interestEarned() {
+
+
+    public double interestEarned(boolean fixed) {
         double amount = sumTransactions();
-        return interestCalculator.calculateInterest(amount);
+        return interestCalculator.calculateInterest(fixed,amount);
     }
-
     public double sumTransactions() {
-        return checkIfTransactionsExist(true);
-    }
 
-    private double checkIfTransactionsExist(boolean checkAll) {
         double amount = 0.0;
         for (Transaction t : transactions)
             amount += t.amount;
@@ -52,10 +51,16 @@ public class Account {
         return "Default";
     }
 
+
     private static final String ACCOUNT_TYPE_FORMAT  = "%s Accounts\n";
 
     public String printAccountType() {
         return String.format(ACCOUNT_TYPE_FORMAT, getAccountName());
+    }
+
+    public Date getLastTransactionDate()
+    {
+       return transactions.get(transactions.size()-1).getTransactionDate();
     }
 
 }
