@@ -1,8 +1,10 @@
 package com.abc.calculator;
 
+import java.util.Calendar;
+
 public class FlatRateInterestCalculator implements InterestCalculator {
 
-    public static final double ONE_PERCENT = 0.05;
+    public static final double ONE_PERCENT = 0.001;
 
     private final double flatRate;
 
@@ -11,7 +13,8 @@ public class FlatRateInterestCalculator implements InterestCalculator {
     }
 
     @Override
-    public double calculateInterest(double amount) {
-        return amount * flatRate;
+    public double calculateInterest(boolean fixed, double amount) {
+        int doy  = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+        return amount * flatRate/365 * doy;
     }
 }
